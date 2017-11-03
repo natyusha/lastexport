@@ -111,9 +111,9 @@ class CustomUser(pylast.User):
 
 
 def import_lastfm(lib, log):
-    user = config['lastfm']['user'].get(unicode)
+    user = config['lastfm']['user'].get(str)
     per_page = config['lastexport']['per_page'].get(int)
-    sqlite3_db = config['lastfm']['sqlite3_custom_db'].get(unicode)
+    sqlite3_db = config['lastfm']['sqlite3_custom_db'].get(str)
 
     if not user:
         raise ui.UserError(u'You must specify a user name for lastexport')
@@ -160,7 +160,7 @@ def import_lastfm(lib, log):
                               u'tried {1} times', page_current, retry + 1)
         page_current += 1
 
-    raw_input('Please close any programs currently accessing ' +
+    input('Please close any programs currently accessing ' +
               'the database before continuing.')
     conn.commit()
     conn.close()
@@ -204,7 +204,7 @@ def process_tracks(lib, tracks, log, sqlite3_db, c):
     total_fails = 0
     log.info(u'Received {0} tracks in this page, processing...', total)
 
-    for num in xrange(0, total):
+    for num in range(0, total):
         artist = tracks[num]['artist'].get('name', '').strip()
         title = tracks[num]['name'].strip()
         play_count = int(tracks[num]['playcount'])
